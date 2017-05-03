@@ -16,7 +16,7 @@ import java.net.Socket;
 
 
 public class SocketClientService extends Service {
-    public  static final int PORT = 8688;
+    public static final int PORT = 8688;
     public static final String TAG = "socket Client ";
     private Socket mClientSocket;
     private PrintWriter mPrintWriter;
@@ -54,7 +54,7 @@ public class SocketClientService extends Service {
             e.printStackTrace();
         }
         Log.d(TAG, "onStartCommand:  send msg to server " + msg);
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
     private void connectSocketServer() {
@@ -78,7 +78,9 @@ public class SocketClientService extends Service {
             while (true) {
                 final String msg = br.readLine();
                 if (msg != null) {
-                    Log.d(TAG, "read from server: " + msg);
+                    String msg1 = "read from server: " + msg;
+                    Log.d(TAG, msg1);
+                    Utils.saveToSdcard(SocketClientService.this, msg1);
                 }
             }
 

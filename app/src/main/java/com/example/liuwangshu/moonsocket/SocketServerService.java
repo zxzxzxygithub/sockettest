@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
+import android.support.annotation.IntDef;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -44,6 +45,11 @@ public class SocketServerService extends Service {
         startService(new Intent(this, AssistService.class));
         new Thread(new TcpServer()).start();
         super.onCreate();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return START_STICKY;
     }
 
     @Override

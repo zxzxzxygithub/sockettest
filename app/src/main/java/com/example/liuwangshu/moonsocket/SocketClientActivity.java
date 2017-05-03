@@ -38,7 +38,7 @@ public class SocketClientActivity extends AppCompatActivity {
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         long triggerAtMills = System.currentTimeMillis();
-        long intervalMills = 1000;
+        long intervalMills = 60*1000;
         PendingIntent operation = PendingIntent.getService(SocketClientActivity.this, REQUESTCODE_SCLIENT, new Intent(SocketClientActivity.this, SocketClientService.class), PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, triggerAtMills, intervalMills, operation);
 
