@@ -33,8 +33,8 @@ public class SocketClientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_socket);
         initView();
-        Intent service = new Intent(this, SocketServerService.class);
-        startService(service);
+       Intent service = new Intent(this, SocketServerService.class);
+       startService(service);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         long triggerAtMills = System.currentTimeMillis();

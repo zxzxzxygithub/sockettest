@@ -1,9 +1,14 @@
 package com.example.liuwangshu.moonsocket;
+
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -14,10 +19,29 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class SocketServerService extends Service {
+    private static final String TAG = "SocketServerService";
     private boolean isServiceDestroyed = false;
 
     @Override
     public void onCreate() {
+        //启用前台服务，主要是startForeground()
+        Notification.Builder builder = new Notification.Builder(this);
+        Notification notification = builder.build();
+        Intent mIntent = new Intent(this, SocketServerService.class);
+        int requestCode = 111;
+        PendingIntent pendingIntent = PendingIntent.getService(this, requestCode, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingIntent);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+        builder.setAutoCancel(true);
+        builder.setContentTitle("加油123");
+        //设置通知默认效果
+        notification.flags = Notification.FLAG_SHOW_LIGHTS;
+        int id = 123;
+        startForeground(id, notification);
+        Log.d(TAG, "onCreate: setserver foreground");
+        //取消通知
+        startService(new Intent(this, AssistService.class));
         new Thread(new TcpServer()).start();
         super.onCreate();
     }
@@ -34,7 +58,7 @@ public class SocketServerService extends Service {
             ServerSocket serverSocket;
             try {
                 //监听8688端口
-                serverSocket = new ServerSocket(8688);
+                serverSocket = new ServerSocket(SocketClientService.PORT);
             } catch (IOException e) {
 
                 return;

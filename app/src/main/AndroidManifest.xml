@@ -27,7 +27,11 @@
         <service
             android:name=".SocketClientService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+        <service
+            android:name=".AssistService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

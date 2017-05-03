@@ -16,6 +16,7 @@ import java.net.Socket;
 
 
 public class SocketClientService extends Service {
+    public  static final int PORT = 8688;
     public static final String TAG = "socket Client ";
     private Socket mClientSocket;
     private PrintWriter mPrintWriter;
@@ -61,11 +62,11 @@ public class SocketClientService extends Service {
         while (socket == null) {
             try {
                 //选择和服务器相同的端口8688
-                int port = 8688;
-                socket = new Socket("localhost", port);
+                socket = new Socket("127.0.0.1", PORT);
+//                socket = new Socket("localhost", PORT);
                 mClientSocket = socket;
                 mPrintWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-                Log.d(TAG, "connectSocketServer:_port_" + port);
+                Log.d(TAG, "connectSocketServer:_port_" + PORT);
             } catch (IOException e) {
                 SystemClock.sleep(1000);
             }
