@@ -7,6 +7,7 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,12 +34,12 @@ public class SocketClientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_socket);
         initView();
-       Intent service = new Intent(this, SocketServerService.class);
-       startService(service);
+        Intent service = new Intent(this, SocketServerService.class);
+        startService(service);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         long triggerAtMills = System.currentTimeMillis();
-        long intervalMills = 60*1000;
+        long intervalMills = 60 * 1000;
         PendingIntent operation = PendingIntent.getService(SocketClientActivity.this, REQUESTCODE_SCLIENT, new Intent(SocketClientActivity.this, SocketClientService.class), PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, triggerAtMills, intervalMills, operation);
 

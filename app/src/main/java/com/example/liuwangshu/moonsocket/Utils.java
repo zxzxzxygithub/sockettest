@@ -13,12 +13,31 @@ import java.io.FileOutputStream;
 public class Utils {
 
     /**
-     * 保存异常信息到sdcard中
+     * 保存error信息到sdcard中
      *
      * @param pContext
      */
-    public static void saveToSdcard(Context pContext, String content) {
-        String fileName;
+    public static void saveErrorInfoToSdcard(Context pContext, String content, boolean append) {
+        String fileName = "socketError.log";
+        saveToSdcard(pContext, fileName, content, append);
+    }
+
+    /**
+     * 保存socket信息到sdcard中
+     *
+     * @param pContext
+     */
+    public static void saveSocketInfoToSdcard(Context pContext, String content, boolean append) {
+        String fileName = "asockettest.log";
+        saveToSdcard(pContext, fileName, content, append);
+    }
+
+    /**
+     * 保存信息到sdcard中
+     *
+     * @param pContext
+     */
+    public static void saveToSdcard(Context pContext, String fileName, String content, boolean append) {
         StringBuffer sBuffer = new StringBuffer();
         // 添加异常信息
         sBuffer.append(content);
@@ -28,11 +47,10 @@ public class Utils {
             if (!file1.exists()) {
                 file1.mkdir();
             }
-            fileName = "asockettest.log";
-            File file2 = new File(file1.getPath(),fileName);
+            File file2 = new File(file1.getPath(), fileName);
             FileOutputStream fos;
             try {
-                fos = new FileOutputStream(file2, true);
+                fos = new FileOutputStream(file2, append);
                 fos.write(sBuffer.toString().getBytes());
                 fos.flush();
             } catch (Exception e) {

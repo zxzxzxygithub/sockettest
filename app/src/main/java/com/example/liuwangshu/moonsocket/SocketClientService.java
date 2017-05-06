@@ -80,7 +80,7 @@ public class SocketClientService extends Service {
                 if (msg != null) {
                     String msg1 = "read from server: " + msg;
                     Log.d(TAG, msg1);
-                    Utils.saveToSdcard(SocketClientService.this, msg1);
+                    ThreadPool.getThreadPool().addTask(new Task(SocketClientService.this, msg1));
                 }
             }
 
